@@ -1,0 +1,9 @@
+pandas==2.2.0
+pyarrow==16.1
+requests
+beautifulsoup4
+json-repair
+nltk
+hdbscan
+umap-learn
+sentence-transformers

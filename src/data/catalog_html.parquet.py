@@ -11,25 +11,12 @@ import sys
 # with open("src/data/html-catalog/urls-2014-2015.txt") as f:
 #     course_urls = f.read().splitlines()
 
-# with open("src/data/html-catalog/urls-2015-2016.txt") as f:
-#     course_urls = f.read().splitlines()
-
-# with open("src/data/html-catalog/urls-2016-2017.txt") as f:
-#     course_urls = f.read().splitlines()
-
-# with open("src/data/html-catalog/urls-2017-2018.txt") as f:
-#     course_urls = f.read().splitlines()
-
-with open("src/data/html-catalog/urls-2023-2024.txt") as f:
-    course_urls = f.read().splitlines()
-
 
 # ----
 
 # course_data = []
 
 # for url in course_urls:
-#     # url=course_urls[0]
 #     r = requests.get(url)
 #     soup = BeautifulSoup(r.text, 'html.parser')
 #     courseblocks = soup.find_all('div', class_='courseblock')
@@ -51,21 +38,17 @@ with open("src/data/html-catalog/urls-2023-2024.txt") as f:
 #     sleep(1)
 
 # df = pd.DataFrame(course_data)
-# df.to_csv("src/data/html-catalog/2023-24-html-catalog.csv", index=False)
+# df.to_csv("src/data/html-catalog/2022-23-html-catalog.csv", index=False)
 
+dfs = []
+for yr in range(2014, 2023):
+    d=pd.read_csv(f"src/data/html-catalog/{yr}-{str(yr+1)[-2:]}-html-catalog.csv")
+    d['year'] = yr
+    dfs.append(d)
 
-df2014 = pd.read_csv("src/data/html-catalog/2014-15-html-catalog.csv")
-df2014['year'] = 2014
-df2015 = pd.read_csv("src/data/html-catalog/2015-16-html-catalog.csv")
-df2015['year'] = 2015
-df2016 = pd.read_csv("src/data/html-catalog/2016-17-html-catalog.csv")
-df2016['year'] = 2016
-df2017 = pd.read_csv("src/data/html-catalog/2017-18-html-catalog.csv")
-df2017['year'] = 2017
-df2023 = pd.read_csv("src/data/html-catalog/2023-24-html-catalog.csv")
-df2023['year'] = 2023
-
-df = pd.concat([df2014, df2015, df2016, df2017, df2023])
+df = pd.concat(dfs)
+df[['cn', 'title', 'credit']] = df.title.str.split("\.  ", regex=True, expand=True)
+df['new_course'] = ~df.title.duplicated()
 
 # Write DataFrame to a temporary file-like object
 buf = pa.BufferOutputStream()   

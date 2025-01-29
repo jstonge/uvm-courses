@@ -1,15 +1,15 @@
 # Uvm Courses
 
+![](./main.png)
 
-## Required data
+This is a small Observable framework data app to for validation of the UVM catalog parse. To reproduce the output, you will need the following data. 
 
- - `annotated_m_split_courses/0155zta11_ug_*`: annotated_m_split_courses from 2014-2018. `Rsync`ed from `netfiles/`. Required by `course_annotated.parquet.py`
- - `raw-data/curr_enroll_*`: enrollment data. Could technically be requested from `raw-data/all_links.txt`. Required by `course_catalogue_raw.parquet.py`.
- - `html-catalog/urls-*`: urls to request. Required by `course_scraper_html.parquet.py` and `embeddings.parquet.py`
+1.`annotated_m_split_courses/0155zta11_ug_`: parsed data. I simply rsynced the data from `netfiles/` into `./src/data/annotated_m_split_courses`. Required by `course_annotated.parquet.py` data loader.
+2. `raw-data/curr_enroll_*`: enrollment data. Could technically be requested from `raw-data/all_links.txt`. Required by `course_catalogue_raw.parquet.py` data loader.
+3. `html-catalog/urls-*`: urls to request. Required by `course_scraper_html.parquet.py`.
  
 
-
-##  Get started Observable Framework
+<details><summary>Get started Observable Framework</summary>
 
 This is an [Observable Framework](https://observablehq.com/framework/) app. To install the required dependencies, run:
 
@@ -68,3 +68,4 @@ A typical Framework project looks like this:
 | `npm run deploy`     | Deploy your app to Observable                            |
 | `npm run clean`      | Clear the local data loader cache                        |
 | `npm run observable` | Run commands like `observable help`                      |
+</details>

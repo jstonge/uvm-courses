@@ -1,10 +1,8 @@
 ---
 sql:
-    enrollment_data: ./data/course_catalogue_raw.parquet
-    description_data: ./data/course_scraper_html.parquet
-    annotated_data: ./data/course_annotated.parquet
-    emb_data: ./data/embeddings.parquet
-    sim_mat_phi: ./data/sim_matrix_phi.parquet
+    enrollment_data: ./data/enrollment.parquet
+    description_data: ./data/catalog_html.parquet
+    annotated_data: ./data/llm.parquet
 ---
 
 # Uvm Course data from enrollment
@@ -51,111 +49,10 @@ resize((width) => Plot.plot({
 }))
 ```
 
-## Embedding time 
-
-```sql id=[...embeddings]
-SELECT * FROM emb_data
-```
-
-
-```js
-const selcol = view(
-  Inputs.select(['year', 'department', 'cluster'], {label: "color"})
-);
-```
-
-```js
-resize((width) => Plot.plot({
-    width,
-    grid: true,
-    height: 600,
-    color: {
-        legend: true, 
-        type: selcol === 'year' ? "ordinal" : "linear"
-    },
-    marks: [ 
-        Plot.dot(embeddings.filter(d=>d.cluster != -1), {
-            x: "x", y: "y", 
-            fill: d => selcol === 'department' ? 
-                deptMap.get(d.dept) : 
-                d[selcol], 
-            title: d => 
-                `dept: ${d.dept}\ncluster: ${d.cluster}\nyear: ${d.year})\ndescription: ${d.description}`, tip: true
-            }),
-        Plot.dot(embeddings.filter(d=>d.cluster == -1), {
-            x: "x", y: "y", fill: "grey", opacity: 0.1
-            }),
-        ]
-}))
-```
-
-## Philosophy similarity matrix
-
-<!-- ```js
-resize((width) => Plot.plot({
-    width,
-    color: {
-        legend:true
-        },
-    padding: 0,
-    marginLeft: 80,
-    marginBottom: 80,
-    x: {tickRotate: 75, label: null},
-    y: {label: null},
-    grid: true,
-    color: {type: "linear", scheme: "PiYG"},
-    marks: [
-        Plot.cell(phi_sim, {x: "source", y: "target", fill: "similarity", inset: 0.5}),
-    ]
-}))
-``` -->
-
-```sql id=[...phi_sim]
-SELECT * FROM sim_mat_phi
-```
-
-```js
-const selidx = view(
-  Inputs.select(new Set(phi_sim.map(d=>d.source)), {label: "select index"})
-);
-```
-
-```js
-const targetidx = view(
-  Inputs.select(new Set(phi_sim.map(d=>d.source)), {label: "target index"})
-);
-```
-
-```sql
-SELECT * 
-FROM sim_mat_phi 
-WHERE source == ${selidx} 
-ORDER BY similarity DESC
-```
-
-
-<div class="grid grid-cols-2">
-<div>
-Description 1: ${embeddings[selidx].description}
-</div>
-<div>
-Description 2: ${embeddings[targetidx].description}
-</div>
-</div>
-
-
 
 ---
 
 # Appendix
-
-```js
-const uniq_dept = new Set(embeddings.map(d => d.dept))
-```
-
-```js
-const deptMap = new Map(Array.from(uniq_dept).map((d, i) => [d, i]));
-```
 
 Raw tables of the different data sources
 
@@ -164,19 +61,27 @@ Raw tables of the different data sources
 We scraped a few years from the UVM html catalog.
 
 ```sql
-SELECT title, year FROM description_data WHERE year = '2015' ORDER BY title
+SELECT title, description, year 
+FROM description_data
+WHERE year = '2014' 
+ORDER BY title
 ```
 
 ### Annotated data table
 
 ```sql
-SELECT * FROM annotated_data WHERE year = '2015'
+SELECT * 
+FROM annotated_data 
+WHERE year = '2003' AND Department IN ('BIOL', 'Biology')
+ORDER BY page_number, col_number
 ```
 
 ### Enrollment data table
 
+
 Raw UVM enrollment data from the 1990s.
 
 ```sql
-SELECT * FROM enrollment_data 
+SELECT  dept, cn, title, COUNT(DISTINCT(dept, cn, title)) as n FROM enrollment_data WHERE year = '2003' GROUP BY dept, cn, title ORDER BY dept, cn
 ```
+

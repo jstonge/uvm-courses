@@ -1,0 +1,17 @@
+.DS_Store
+/dist/
+node_modules/
+yarn-error.log
+
+src/data/.DS_Store
+src/data/sim_matrix_phi.parquet
+src/data/annotated_data.csv
+
+src/data/annotated_m_split_courses
+src/data/html-catalog
+src/data/raw-data
+myenv/
+package-lock.json
+results/
+src/etc/
+src/data/sim_matrix_cs.parquet

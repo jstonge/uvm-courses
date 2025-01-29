@@ -15,3 +15,4 @@ package-lock.json
 results/
 src/etc/
 src/data/sim_matrix_cs.parquet
+src/data/enrollment-data/

@@ -1,8 +1,8 @@
 ---
 sql:
-    enrollment_data: ./data/enrollment.parquet
-    description_data: ./data/catalog_html.parquet
-    annotated_data: ./data/llm.parquet
+    enrollment_data: ./process/enrollment.parquet
+    description_data: ./process/catalog_html.parquet
+    annotated_data: ./process/uvm_parse.parquet
 ---
 
 # Uvm Course data from enrollment
@@ -10,26 +10,25 @@ sql:
 
 
 ```sql id=count_year_enrollment
-SELECT COUNT(DISTINCT (cn, title)) AS n_courses, year
+SELECT COUNT(DISTINCT (cn, title)) AS n_courses, year::INT as year
 FROM enrollment_data
 GROUP BY year
 ORDER BY year;
 ```
 
 ```sql id=count_year_html
-SELECT COUNT(title) as n_courses, year 
+SELECT COUNT(title) as n_courses, year::INT as year
 FROM description_data 
 GROUP BY YEAR 
 ORDER BY year;
 ```
 
 ```sql id=count_year_annot
-SELECT COUNT(DISTINCT (Number, Title)) as n_courses, year 
+SELECT COUNT(DISTINCT (Number, Title)) as n_courses, YEAR::INT as year
 FROM annotated_data 
 GROUP BY YEAR 
 ORDER BY year;
 ```
-
 
 ```js
 resize((width) => Plot.plot({

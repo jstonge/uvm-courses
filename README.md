@@ -2,7 +2,7 @@
 
 ![](./main.png)
 
-This is a small Observable framework data app to for validation of the UVM catalog parse. See `makefile` for instructions. 
+This is a small Observable framework data app to for validation of the UVM catalog parse. See [Makefile](https://github.com/jstonge/uvm-courses/blob/main/Makefile) for instructions to access the data. Note that to reproduce the visualizatin, we use some SQL queries on the fly in the [data app](https://raw.githubusercontent.com/jstonge/uvm-courses/refs/heads/main/src/index.md?token=GHSAT0AAAAAACYSIIU75IPWKTXLDERJ4IOMZ4ZXYLQ). It shouldn't be too hard to replicate, with the wrangled data.
 
 
 <details><summary>Get started Observable Framework</summary>

@@ -4,7 +4,7 @@
 
 This is a small Observable framework data app to for validation of the UVM catalog parse. To reproduce the output, you will need the following data. 
 
-1.`annotated_m_split_courses/0155zta11_ug_`: parsed data. I simply rsynced the data from `netfiles/` into `./src/data/annotated_m_split_courses`. Required by `course_annotated.parquet.py` data loader.
+1. `annotated_m_split_courses/0155zta11_ug_`: parsed data. I simply rsynced the data from `netfiles/` into `./src/data/annotated_m_split_courses`. Required by `course_annotated.parquet.py` data loader.
 2. `raw-data/curr_enroll_*`: enrollment data. Could technically be requested from `raw-data/all_links.txt`. Required by `course_catalogue_raw.parquet.py` data loader.
 3. `html-catalog/urls-*`: urls to request. Required by `course_scraper_html.parquet.py`.
  

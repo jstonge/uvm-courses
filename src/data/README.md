@@ -1,0 +1,4 @@
+- `catalog_html_url.py`: download and wrangle links in `uvm-html-urls.txt`
+- `enrollment_url.py`: grab enrollment data from the web + some wrangling
+- `uvm_parse_repair.py`: repair json from parsed uvm data
+- `uvm-html-urls.txt`: are the links to uvm html catalogs (eyeballed, still incomplete)

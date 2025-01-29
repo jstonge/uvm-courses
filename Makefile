@@ -5,7 +5,7 @@ UVM_NETID=jstonge1
 
 .PHONY: parsed-data html-data enrollement-data
 
-# Get the raw data
+# Get the raw data (NOT TESTED YET)
 
 parsed-data: # -> annotated_data.parquet
 	mkdir -p $(DATA_DIR_OBS)/annotated_m_split_courses
